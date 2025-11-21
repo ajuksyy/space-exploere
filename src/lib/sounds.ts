@@ -3,6 +3,8 @@
 let buttonClickAudio: HTMLAudioElement | null = null;
 let planetClickAudio: HTMLAudioElement | null = null;
 let backButtonAudio: HTMLAudioElement | null = null;
+let explosionAudio: HTMLAudioElement | null = null;
+let gunShotAudio: HTMLAudioElement | null = null;
 
 export function playButtonClickSound() {
   if (!buttonClickAudio) {
@@ -33,6 +35,28 @@ export function playBackButtonSound() {
   }
   backButtonAudio.currentTime = 0;
   backButtonAudio.play().catch(() => {
+    // Ignore errors if audio fails to play
+  });
+}
+
+export function playExplosionSound() {
+  if (!explosionAudio) {
+    explosionAudio = new Audio('/sounds/explosion.mp3');
+    explosionAudio.volume = 0.6;
+  }
+  explosionAudio.currentTime = 0;
+  explosionAudio.play().catch(() => {
+    // Ignore errors if audio fails to play
+  });
+}
+
+export function playGunShotSound() {
+  if (!gunShotAudio) {
+    gunShotAudio = new Audio('/sounds/gun-shot.mp3');
+    gunShotAudio.volume = 0.5;
+  }
+  gunShotAudio.currentTime = 0;
+  gunShotAudio.play().catch(() => {
     // Ignore errors if audio fails to play
   });
 }

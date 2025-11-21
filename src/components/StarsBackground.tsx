@@ -8,8 +8,8 @@ export default function StarsBackground() {
   const pathname = usePathname();
 
   useEffect(() => {
-    // Don't show stars on solar system page
-    if (pathname === "/solar-system") {
+    // Don't show stars on solar system page (game has its own stars)
+    if (pathname === "/solar-system" || pathname === "/game") {
       return;
     }
 
@@ -68,8 +68,8 @@ export default function StarsBackground() {
     };
   }, [pathname]);
 
-  // Don't render canvas on solar system page
-  if (pathname === "/solar-system") {
+  // Don't render canvas on solar system page or game page
+  if (pathname === "/solar-system" || pathname === "/game") {
     return null;
   }
 

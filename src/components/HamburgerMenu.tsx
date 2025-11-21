@@ -15,7 +15,7 @@ export default function HamburgerMenu() {
     { href: "/", label: "Home" },
     { href: "/solar-system", label: "Solar System" },
     { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" },
+    { href: "/game", label: "Let's Play" },
   ];
 
   return (

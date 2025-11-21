@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Play, HelpCircle, Info, Mail } from "lucide-react";
+import { Play, HelpCircle, Info, Gamepad2 } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
 import { quizQuestions } from "@/data/quizQuestions";
 import { playButtonClickSound } from "@/lib/sounds";
@@ -82,13 +82,13 @@ export default function Home() {
               About
             </Button>
           </Link>
-          <Link href="/contact" onClick={handleButtonClick}>
+          <Link href="/game" onClick={handleButtonClick}>
             <Button
               size="lg"
               className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-base sm:text-lg px-6 sm:px-10 py-5 sm:py-6 rounded-full shadow-lg shadow-yellow-500/50 hover:shadow-yellow-500/70 transition-all hover:scale-105"
             >
-              <Mail className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
-              Contact
+              <Gamepad2 className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
+              Let's Play
             </Button>
           </Link>
         </motion.div>
