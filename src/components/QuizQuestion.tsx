@@ -7,6 +7,7 @@ import { useQuizStore } from "@/store/quizStore";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle2, XCircle } from "lucide-react";
+import { playButtonClickSound } from "@/lib/sounds";
 
 interface QuizQuestionProps {
   question: QuizQuestionType;
@@ -20,12 +21,14 @@ export default function QuizQuestion({ question }: QuizQuestionProps) {
 
   const handleAnswerSelect = (answerIndex: number) => {
     if (showResult) return;
+    playButtonClickSound();
     setSelectedAnswer(answerIndex);
     selectAnswer(answerIndex);
     setShowResult(true);
   };
 
   const handleNext = () => {
+    playButtonClickSound();
     setSelectedAnswer(null);
     setShowResult(false);
     nextQuestion();

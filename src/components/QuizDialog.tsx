@@ -12,6 +12,7 @@ import QuizQuestion from "./QuizQuestion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trophy, RotateCcw } from "lucide-react";
+import { playButtonClickSound } from "@/lib/sounds";
 
 export default function QuizDialog() {
   const {
@@ -30,6 +31,7 @@ export default function QuizDialog() {
   const percentage = totalQuestions > 0 ? Math.round((score / totalQuestions) * 100) : 0;
 
   const handleRestart = () => {
+    playButtonClickSound();
     resetQuiz();
     const shuffled = [...questions].sort(() => Math.random() - 0.5);
     startQuiz(shuffled.slice(0, 10));

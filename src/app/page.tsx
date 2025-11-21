@@ -6,15 +6,21 @@ import { motion } from "framer-motion";
 import { Play, HelpCircle, Info, Mail } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
 import { quizQuestions } from "@/data/quizQuestions";
+import { playButtonClickSound } from "@/lib/sounds";
 
 export default function Home() {
   const { openQuiz, startQuiz } = useQuizStore();
 
   const handleQuizClick = () => {
+    playButtonClickSound();
     // Shuffle questions and take 10 random ones
     const shuffled = [...quizQuestions].sort(() => Math.random() - 0.5);
     startQuiz(shuffled.slice(0, 10));
     openQuiz();
+  };
+
+  const handleButtonClick = () => {
+    playButtonClickSound();
   };
 
   return (
@@ -41,7 +47,7 @@ export default function Home() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.4 }}
         >
-          <Link href="/solar-system">
+          <Link href="/solar-system" onClick={handleButtonClick}>
             <Button
               size="lg"
               className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-lg sm:text-xl px-8 sm:px-12 py-6 sm:py-8 rounded-full shadow-lg shadow-yellow-500/50 hover:shadow-yellow-500/70 transition-all hover:scale-105"
@@ -67,7 +73,7 @@ export default function Home() {
             <HelpCircle className="mr-2 h-4 w-4 sm:h-5 sm:w-5" />
             Quiz
           </Button>
-          <Link href="/about">
+          <Link href="/about" onClick={handleButtonClick}>
             <Button
               size="lg"
               className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-base sm:text-lg px-6 sm:px-10 py-5 sm:py-6 rounded-full shadow-lg shadow-yellow-500/50 hover:shadow-yellow-500/70 transition-all hover:scale-105"
@@ -76,7 +82,7 @@ export default function Home() {
               About
             </Button>
           </Link>
-          <Link href="/contact">
+          <Link href="/contact" onClick={handleButtonClick}>
             <Button
               size="lg"
               className="bg-yellow-500 hover:bg-yellow-600 text-black font-bold text-base sm:text-lg px-6 sm:px-10 py-5 sm:py-6 rounded-full shadow-lg shadow-yellow-500/50 hover:shadow-yellow-500/70 transition-all hover:scale-105"

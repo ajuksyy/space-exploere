@@ -5,6 +5,7 @@ import { useFrame, useLoader } from "@react-three/fiber";
 import { Mesh, TextureLoader, RingGeometry, DoubleSide } from "three";
 import { usePlanetStore } from "@/store/planetStore";
 import { Planet as PlanetType } from "@/data/planets";
+import { playPlanetClickSound } from "@/lib/sounds";
 
 interface SaturnProps {
   planet: PlanetType;
@@ -44,6 +45,7 @@ function SaturnPlanet({ planet, angle }: SaturnProps) {
   });
 
   const handleClick = () => {
+    playPlanetClickSound();
     selectPlanet(planet);
     openPanel();
   };

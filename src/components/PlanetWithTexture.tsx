@@ -8,6 +8,7 @@ import { useFrame } from "@react-three/fiber";
 import { usePlanetStore } from "@/store/planetStore";
 import { Planet as PlanetType } from "@/data/planets";
 import { ErrorBoundary } from "./ErrorBoundary";
+import { playPlanetClickSound } from "@/lib/sounds";
 
 interface PlanetWithTextureProps {
   planet: PlanetType;
@@ -30,6 +31,7 @@ function PlanetMeshFallback({ planet, angle }: PlanetWithTextureProps) {
   });
 
   const handleClick = () => {
+    playPlanetClickSound();
     selectPlanet(planet);
     openPanel();
   };
@@ -71,6 +73,7 @@ function PlanetWithTextureMesh({ planet, angle }: PlanetWithTextureProps) {
   });
 
   const handleClick = () => {
+    playPlanetClickSound();
     selectPlanet(planet);
     openPanel();
   };
