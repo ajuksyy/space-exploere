@@ -2,6 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { X } from "lucide-react";
+import { useState, useEffect } from "react";
 import { usePlanetStore } from "@/store/planetStore";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,12 @@ import Image from "next/image";
 
 export default function PlanetPanel() {
   const { selectedPlanet, isPanelOpen, closePanel } = usePlanetStore();
+  const [imageError, setImageError] = useState(false);
+
+  // Reset error state when planet changes
+  useEffect(() => {
+    setImageError(false);
+  }, [selectedPlanet?.id]);
 
   if (!selectedPlanet) return null;
 
@@ -42,13 +49,28 @@ export default function PlanetPanel() {
                   className="w-full h-full flex items-center justify-center"
                   style={{ backgroundColor: selectedPlanet.color + "20" }}
                 >
-                  <div
-                    className="w-32 h-32 rounded-full"
-                    style={{
-                      backgroundColor: selectedPlanet.color,
-                      boxShadow: `0 0 40px ${selectedPlanet.color}`,
-                    }}
-                  />
+                  <div className="relative w-48 h-48 rounded-full overflow-hidden">
+                    {!imageError ? (
+                      <Image
+                        src={selectedPlanet.textureUrl}
+                        alt={selectedPlanet.name}
+                        fill
+                        className="object-cover rounded-full"
+                        style={{
+                          boxShadow: `0 0 40px ${selectedPlanet.color}`,
+                        }}
+                        onError={() => setImageError(true)}
+                      />
+                    ) : (
+                      <div
+                        className="w-full h-full rounded-full"
+                        style={{
+                          backgroundColor: selectedPlanet.color,
+                          boxShadow: `0 0 40px ${selectedPlanet.color}`,
+                        }}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
 
