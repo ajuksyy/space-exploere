@@ -1,14 +1,41 @@
 "use client";
 
 import { Suspense, useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { Canvas, useFrame, useLoader } from "@react-three/fiber";
 import { OrbitControls, Stars as ThreeStars } from "@react-three/drei";
+import { TextureLoader } from "three";
 import { usePlanetStore } from "@/store/planetStore";
 import { planets } from "@/data/planets";
 import Planet from "./Planet";
 import Saturn from "./Saturn";
+import OrbitalLine from "./OrbitalLine";
+import AsteroidBelt from "./AsteroidBelt";
+import { ErrorBoundary } from "./ErrorBoundary";
 
-function Sun() {
+function SunMesh() {
+  const sunRef = useRef<any>(null);
+  const texture = useLoader(TextureLoader, "/textures/sun.jpg");
+
+  useFrame(() => {
+    if (sunRef.current) {
+      sunRef.current.rotation.y += 0.005;
+    }
+  });
+
+  return (
+    <mesh ref={sunRef} position={[0, 0, 0]}>
+      <sphereGeometry args={[1.5, 64, 64]} />
+      <meshStandardMaterial
+        map={texture}
+        emissive="#FFA500"
+        emissiveIntensity={0.8}
+      />
+      <pointLight intensity={2} distance={100} />
+    </mesh>
+  );
+}
+
+function SunFallback() {
   const sunRef = useRef<any>(null);
 
   useFrame(() => {
@@ -27,6 +54,16 @@ function Sun() {
       />
       <pointLight intensity={2} distance={100} />
     </mesh>
+  );
+}
+
+function Sun() {
+  return (
+    <ErrorBoundary fallback={<SunFallback />}>
+      <Suspense fallback={<SunFallback />}>
+        <SunMesh />
+      </Suspense>
+    </ErrorBoundary>
   );
 }
 
@@ -74,6 +111,19 @@ export default function SolarSystemScene() {
           <ThreeStars radius={100} depth={50} count={1000} factor={4} />
 
           <Sun />
+
+          {/* Orbital lines for each planet */}
+          {planets.map((planet) => (
+            <OrbitalLine key={`orbit-${planet.id}`} radius={planet.orbitalRadius} />
+          ))}
+
+          {/* Asteroid belt between Mars and Jupiter */}
+          <AsteroidBelt innerRadius={22} outerRadius={26} count={200} />
+
+          {/* Additional scattered asteroids throughout the solar system */}
+          <AsteroidBelt innerRadius={30} outerRadius={35} count={150} />
+          <AsteroidBelt innerRadius={40} outerRadius={45} count={100} />
+          <AsteroidBelt innerRadius={50} outerRadius={55} count={80} />
 
           {planets.map((planet, index) => {
             const angle = (index / planets.length) * Math.PI * 2;
