@@ -11,8 +11,8 @@ import { useQuizStore } from "@/store/quizStore";
 import QuizQuestion from "./QuizQuestion";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Trophy, RotateCcw } from "lucide-react";
-import { playButtonClickSound } from "@/lib/sounds";
+import { Trophy, RotateCcw, ArrowLeft } from "lucide-react";
+import { playButtonClickSound, playBackButtonSound } from "@/lib/sounds";
 
 export default function QuizDialog() {
   const {
@@ -37,16 +37,33 @@ export default function QuizDialog() {
     startQuiz(shuffled.slice(0, 10));
   };
 
+  const handleClose = () => {
+    playBackButtonSound();
+    closeQuiz();
+  };
+
   return (
-    <Dialog open={isOpen} onOpenChange={closeQuiz}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900 to-black border-white/20 text-white">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-yellow-400">
-            Solar System Quiz
-          </DialogTitle>
-          <DialogDescription className="text-gray-300">
-            Test your knowledge about our solar system!
-          </DialogDescription>
+          <div className="flex items-center justify-between">
+            <div>
+              <DialogTitle className="text-2xl font-bold text-yellow-400">
+                Solar System Quiz
+              </DialogTitle>
+              <DialogDescription className="text-gray-300">
+                Test your knowledge about our solar system!
+              </DialogDescription>
+            </div>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleClose}
+              className="text-white hover:text-yellow-400"
+            >
+              <ArrowLeft className="h-5 w-5" />
+            </Button>
+          </div>
         </DialogHeader>
 
         {!isFinished ? (

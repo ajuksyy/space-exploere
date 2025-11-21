@@ -2,6 +2,7 @@
 
 let buttonClickAudio: HTMLAudioElement | null = null;
 let planetClickAudio: HTMLAudioElement | null = null;
+let backButtonAudio: HTMLAudioElement | null = null;
 
 export function playButtonClickSound() {
   if (!buttonClickAudio) {
@@ -21,6 +22,17 @@ export function playPlanetClickSound() {
   }
   planetClickAudio.currentTime = 0;
   planetClickAudio.play().catch(() => {
+    // Ignore errors if audio fails to play
+  });
+}
+
+export function playBackButtonSound() {
+  if (!backButtonAudio) {
+    backButtonAudio = new Audio('/sounds/back-button.mp3');
+    backButtonAudio.volume = 0.5;
+  }
+  backButtonAudio.currentTime = 0;
+  backButtonAudio.play().catch(() => {
     // Ignore errors if audio fails to play
   });
 }
