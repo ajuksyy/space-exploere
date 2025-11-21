@@ -7,12 +7,12 @@ export default function StarsBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pathname = usePathname();
 
-  // Don't show stars on solar system page
-  if (pathname === "/solar-system") {
-    return null;
-  }
-
   useEffect(() => {
+    // Don't show stars on solar system page
+    if (pathname === "/solar-system") {
+      return;
+    }
+
     const canvas = canvasRef.current;
     if (!canvas) return;
 
@@ -66,7 +66,12 @@ export default function StarsBackground() {
     return () => {
       window.removeEventListener("resize", resizeCanvas);
     };
-  }, []);
+  }, [pathname]);
+
+  // Don't render canvas on solar system page
+  if (pathname === "/solar-system") {
+    return null;
+  }
 
   return (
     <canvas
