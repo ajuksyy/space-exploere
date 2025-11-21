@@ -24,7 +24,7 @@ function SunMesh() {
 
   return (
     <mesh ref={sunRef} position={[0, 0, 0]}>
-      <sphereGeometry args={[1.5, 64, 64]} />
+      <sphereGeometry args={[4.5, 64, 64]} />
       <meshStandardMaterial
         map={texture}
         emissive="#FFA500"
@@ -46,7 +46,7 @@ function SunFallback() {
 
   return (
     <mesh ref={sunRef} position={[0, 0, 0]}>
-      <sphereGeometry args={[1.5, 32, 32]} />
+      <sphereGeometry args={[4.5, 32, 32]} />
       <meshStandardMaterial
         color="#FFD700"
         emissive="#FFA500"
@@ -87,8 +87,8 @@ function CameraController() {
       );
       camera.lookAt(targetX, 0, targetZ);
     } else {
-      // Default view
-      camera.position.lerp({ x: 0, y: 15, z: 30 } as any, 0.05);
+      // Default view - further back to see entire solar system
+      camera.position.lerp({ x: 0, y: 25, z: 60 } as any, 0.05);
       camera.lookAt(0, 0, 0);
     }
   });
@@ -100,7 +100,7 @@ export default function SolarSystemScene() {
   return (
     <div className="w-full h-screen">
       <Canvas
-        camera={{ position: [0, 15, 30], fov: 50 }}
+        camera={{ position: [0, 25, 60], fov: 50 }}
         gl={{ antialias: true }}
       >
         <Suspense fallback={null}>
@@ -138,8 +138,8 @@ export default function SolarSystemScene() {
             enableZoom={true}
             enablePan={true}
             enableRotate={true}
-            minDistance={10}
-            maxDistance={100}
+            minDistance={20}
+            maxDistance={150}
           />
         </Suspense>
       </Canvas>
