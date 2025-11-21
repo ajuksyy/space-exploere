@@ -1,9 +1,16 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { usePathname } from "next/navigation";
 
 export default function StarsBackground() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const pathname = usePathname();
+
+  // Don't show stars on solar system page
+  if (pathname === "/solar-system") {
+    return null;
+  }
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -13,22 +20,23 @@ export default function StarsBackground() {
     if (!ctx) return;
 
     const stars: Array<{ x: number; y: number; radius: number; opacity: number; twinkleSpeed: number }> = [];
-    const numStars = 200;
-
-    // Initialize stars
-    for (let i = 0; i < numStars; i++) {
-      stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        radius: Math.random() * 1.5,
-        opacity: Math.random(),
-        twinkleSpeed: Math.random() * 0.02 + 0.01,
-      });
-    }
+    const numStars = 500; // Increased number of stars
 
     const resizeCanvas = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      
+      // Reinitialize stars when canvas resizes to cover entire area
+      stars.length = 0;
+      for (let i = 0; i < numStars; i++) {
+        stars.push({
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          radius: Math.random() * 1.5,
+          opacity: Math.random(),
+          twinkleSpeed: Math.random() * 0.02 + 0.01,
+        });
+      }
     };
 
     resizeCanvas();
