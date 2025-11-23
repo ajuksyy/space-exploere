@@ -31,8 +31,19 @@ export default function Home() {
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="space-y-4"
+          className="space-y-4 relative"
         >
+          <div className="absolute -top-30 left-1/2 transform -translate-x-1/2 flex items-center justify-center z-[-10]">
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="max-w-full h-auto max-h-32 sm:max-h-48"
+            >
+              <source src="/gifs/Timeline 2.gif.mp4" type="video/mp4" />
+            </video>
+          </div>
           <h1 className="text-5xl sm:text-7xl font-bold text-white mb-2">
             Space Explorer
           </h1>
