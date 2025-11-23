@@ -14,7 +14,6 @@ export default function HamburgerMenu() {
   const navItems = [
     { href: "/", label: "Home" },
     { href: "/solar-system", label: "Solar System" },
-    { href: "/about", label: "About" },
     { href: "/game", label: "Let's Play" },
   ];
 

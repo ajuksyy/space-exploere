@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trophy, RotateCcw, ArrowLeft } from "lucide-react";
 import { playButtonClickSound, playBackButtonSound } from "@/lib/sounds";
+import { motion } from "framer-motion";
 
 export default function QuizDialog() {
   const {
@@ -44,22 +45,22 @@ export default function QuizDialog() {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900 to-black border-white/20 text-white">
+      <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900 via-black to-gray-900 border-white/20 text-white backdrop-blur-xl">
         <DialogHeader>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between mb-4">
             <div>
-              <DialogTitle className="text-2xl font-bold text-yellow-400">
+              <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
                 Solar System Quiz
               </DialogTitle>
-              <DialogDescription className="text-gray-300">
-                Test your knowledge about our solar system!
+              <DialogDescription className="text-gray-300 mt-1">
+                Test your knowledge about our solar system! 🌌
               </DialogDescription>
             </div>
             <Button
               variant="ghost"
               size="icon"
               onClick={handleClose}
-              className="text-white hover:text-yellow-400"
+              className="text-white hover:text-yellow-400 hover:bg-yellow-400/10 rounded-full transition-all"
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
@@ -68,12 +69,12 @@ export default function QuizDialog() {
 
         {!isFinished ? (
           <div className="space-y-6">
-            <div className="flex items-center justify-between text-sm">
-              <span className="text-gray-400">
-                Question {currentQuestionIndex + 1} of {totalQuestions}
+            <div className="flex items-center justify-between p-4 rounded-xl bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/30 backdrop-blur-sm">
+              <span className="text-gray-300 font-medium">
+                Question <span className="text-yellow-400 font-bold">{currentQuestionIndex + 1}</span> of <span className="text-white font-bold">{totalQuestions}</span>
               </span>
-              <span className="text-yellow-400 font-semibold">
-                Score: {score}/{totalQuestions}
+              <span className="text-yellow-400 font-bold text-lg">
+                Score: <span className="text-white">{score}</span>/{totalQuestions}
               </span>
             </div>
 
@@ -82,24 +83,29 @@ export default function QuizDialog() {
             )}
           </div>
         ) : (
-          <Card className="bg-black/50 border-white/20">
+          <Card className="bg-gradient-to-br from-gray-900/90 to-black/90 border-white/20 backdrop-blur-xl">
             <CardHeader className="text-center">
-              <div className="flex justify-center mb-4">
-                <Trophy className="h-16 w-16 text-yellow-400" />
-              </div>
-              <CardTitle className="text-3xl font-bold text-yellow-400">
-                Quiz Complete!
+              <motion.div
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                transition={{ type: "spring", duration: 0.5 }}
+                className="flex justify-center mb-4"
+              >
+                <Trophy className="h-20 w-20 text-yellow-400 drop-shadow-lg" />
+              </motion.div>
+              <CardTitle className="text-4xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+                Quiz Complete! 🎉
               </CardTitle>
             </CardHeader>
             <CardContent className="space-y-6 text-center">
-              <div className="space-y-2">
-                <p className="text-4xl font-bold text-white">
+              <div className="space-y-3 p-6 rounded-xl bg-gradient-to-r from-yellow-500/10 to-orange-500/10 border border-yellow-500/30 backdrop-blur-sm">
+                <p className="text-5xl font-bold text-white">
                   {score}/{totalQuestions}
                 </p>
-                <p className="text-2xl font-semibold text-yellow-400">
+                <p className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
                   {percentage}%
                 </p>
-                <p className="text-gray-300">
+                <p className="text-lg text-gray-200 font-medium">
                   {percentage >= 80
                     ? "🌟 Excellent! You're a space expert!"
                     : percentage >= 60
@@ -109,9 +115,9 @@ export default function QuizDialog() {
               </div>
               <Button
                 onClick={handleRestart}
-                className="bg-yellow-500 hover:bg-yellow-600 text-black font-semibold w-full"
+                className="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-600 hover:to-yellow-700 text-black font-bold w-full py-6 rounded-full shadow-lg shadow-yellow-500/50 hover:shadow-yellow-500/70 transition-all hover:scale-105 text-lg"
               >
-                <RotateCcw className="mr-2 h-4 w-4" />
+                <RotateCcw className="mr-2 h-5 w-5" />
                 Restart Quiz
               </Button>
             </CardContent>
