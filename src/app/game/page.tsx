@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense } from "react";
-import GameScene from "@/components/GameScene";
+import GameScene from "@/components/game/GameScene";
 
 export default function GamePage() {
   return (

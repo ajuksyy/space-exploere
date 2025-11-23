@@ -3,7 +3,7 @@
 import { useRef, Suspense } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { Mesh, TextureLoader, BoxGeometry } from "three";
-import { ErrorBoundary } from "./ErrorBoundary";
+import { ErrorBoundary } from "../ErrorBoundary";
 
 interface AsteroidProps {
   position: [number, number, number];

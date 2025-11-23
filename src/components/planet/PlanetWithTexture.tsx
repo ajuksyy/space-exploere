@@ -7,7 +7,7 @@ import { useRef, useState, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import { usePlanetStore } from "@/store/planetStore";
 import { Planet as PlanetType } from "@/data/planets";
-import { ErrorBoundary } from "./ErrorBoundary";
+import { ErrorBoundary } from "../ErrorBoundary";
 import { playPlanetClickSound } from "@/lib/sounds";
 
 interface PlanetWithTextureProps {

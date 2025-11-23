@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import StarsBackground from "@/components/StarsBackground";
-import QuizDialog from "@/components/QuizDialog";
+import QuizDialog from "@/components/quiz/QuizDialog";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

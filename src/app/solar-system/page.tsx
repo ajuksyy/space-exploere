@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import SolarSystemScene from "@/components/SolarSystemScene";
-import PlanetPanel from "@/components/PlanetPanel";
+import PlanetPanel from "@/components/planet/PlanetPanel";
 import { playBackButtonSound } from "@/lib/sounds";
 
 export default function SolarSystemPage() {

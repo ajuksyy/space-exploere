@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo } from "react";
-import Asteroid from "./Asteroid";
+import Asteroid from "./planet/Asteroid";
 
 interface AsteroidBeltProps {
   innerRadius: number;

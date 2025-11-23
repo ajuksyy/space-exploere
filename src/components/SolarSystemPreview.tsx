@@ -4,7 +4,7 @@ import { Suspense, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { OrbitControls, Stars as ThreeStars } from "@react-three/drei";
 import { planets } from "@/data/planets";
-import Planet from "./Planet";
+import Planet from "./planet/Planet";
 
 function Sun() {
   const sunRef = useRef<any>(null);

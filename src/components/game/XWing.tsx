@@ -4,7 +4,7 @@ import { useRef, Suspense, useEffect } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import { Mesh, Group } from "three";
-import { ErrorBoundary } from "./ErrorBoundary";
+import { ErrorBoundary } from "../ErrorBoundary";
 
 // Preload the model for better performance
 useGLTF.preload("/attributes/T-65 X-Wing Starfighter.glb");
