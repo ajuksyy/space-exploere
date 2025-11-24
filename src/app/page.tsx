@@ -43,23 +43,37 @@ export default function Home() {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video) return;
+    if (!video || !isVideoOpen) return;
 
     const updateProgress = () => {
-      if (video.duration) {
-        setProgress((video.currentTime / video.duration) * 100);
+      if (video.duration && !isNaN(video.duration)) {
+        const progressPercent = (video.currentTime / video.duration) * 100;
+        setProgress(progressPercent);
       }
     };
 
     const handleTimeUpdate = () => updateProgress();
     const handleLoadedMetadata = () => updateProgress();
+    const handleLoadedData = () => updateProgress();
+    const handlePlay = () => updateProgress();
 
     video.addEventListener("timeupdate", handleTimeUpdate);
     video.addEventListener("loadedmetadata", handleLoadedMetadata);
+    video.addEventListener("loadeddata", handleLoadedData);
+    video.addEventListener("play", handlePlay);
+
+    // Initial update
+    updateProgress();
+
+    // Set up interval for smoother updates
+    const interval = setInterval(updateProgress, 100);
 
     return () => {
       video.removeEventListener("timeupdate", handleTimeUpdate);
       video.removeEventListener("loadedmetadata", handleLoadedMetadata);
+      video.removeEventListener("loadeddata", handleLoadedData);
+      video.removeEventListener("play", handlePlay);
+      clearInterval(interval);
     };
   }, [isVideoOpen]);
 
@@ -115,17 +129,6 @@ export default function Home() {
           transition={{ duration: 0.6 }}
           className="space-y-4 relative"
         >
-          <div className="absolute -top-30 left-1/2 transform -translate-x-1/2 flex items-center justify-center z-[-10]">
-            <video
-              autoPlay
-              loop
-              muted
-              playsInline
-              className="max-w-full h-auto max-h-32 sm:max-h-48"
-            >
-              <source src="/gifs/Timeline 2.gif.mp4" type="video/mp4" />
-            </video>
-          </div>
           <h1 className="text-5xl sm:text-7xl font-bold text-white mb-2">
             Space Explorer
           </h1>
