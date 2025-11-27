@@ -10,6 +10,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, Play } from "lucide-react";
 import Link from "next/link";
 import { playBackButtonSound, playGunShotSound, playExplosionSound } from "@/lib/sounds";
+import { spaceFacts } from "@/data/spaceFacts";
+import SpaceFactBubble from "./SpaceFactBubble";
 
 interface Asteroid {
   id: number;
@@ -144,6 +146,8 @@ export default function GameScene() {
   const bulletIdRef = useRef(0);
   const lastAsteroidSpawn = useRef(0);
   const gameTimeRef = useRef(0);
+  const [currentFact, setCurrentFact] = useState<string | null>(null);
+  const lastFactTimeRef = useRef(0);
 
   const shoot = useCallback(() => {
     playGunShotSound();
@@ -259,9 +263,35 @@ export default function GameScene() {
     setAsteroids([]);
     setBullets([]);
     setShipPosition([0, -5, 0]);
+    setCurrentFact(null);
     gameTimeRef.current = 0;
     lastAsteroidSpawn.current = 0;
+    lastFactTimeRef.current = 0;
   };
+
+  // Show fact every 45 seconds
+  useEffect(() => {
+    if (isPaused || gameOver) {
+      return;
+    }
+    
+    const factInterval = 12; // Show fact every 45 seconds
+    const checkInterval = setInterval(() => {
+      if (!isPaused && !gameOver && gameTimeRef.current - lastFactTimeRef.current >= factInterval) {
+        // Get a random fact
+        const randomIndex = Math.floor(Math.random() * spaceFacts.length);
+        const randomFact = spaceFacts[randomIndex].fact;
+        setCurrentFact(randomFact);
+        lastFactTimeRef.current = gameTimeRef.current;
+      }
+    }, 1000); // Check every second
+    
+    return () => clearInterval(checkInterval);
+  }, [isPaused, gameOver]);
+
+  const handleFactComplete = useCallback(() => {
+    setCurrentFact(null);
+  }, []);
 
   return (
     <>
@@ -364,6 +394,11 @@ export default function GameScene() {
             <p>Arrow Keys / WASD: Move | Space / Click: Shoot | ESC: Pause</p>
           </div>
         </div>
+      )}
+
+      {/* Space Fact Bubble */}
+      {!isPaused && !gameOver && currentFact && (
+        <SpaceFactBubble fact={currentFact} onComplete={handleFactComplete} />
       )}
     </>
   );
