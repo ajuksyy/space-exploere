@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import { Play, HelpCircle, Gamepad2, Pause, X } from "lucide-react";
 import { useQuizStore } from "@/store/quizStore";
-import { quizQuestions } from "@/data/quizQuestions";
 import { playButtonClickSound, playBackButtonSound } from "@/lib/sounds";
 import {
   Dialog,
@@ -15,7 +14,7 @@ import {
 } from "@/components/ui/dialog";
 
 export default function Home() {
-  const { openQuiz, startQuiz } = useQuizStore();
+  const { openQuiz } = useQuizStore();
   const [isVideoOpen, setIsVideoOpen] = useState(false);
   const [isPlaying, setIsPlaying] = useState(true);
   const [progress, setProgress] = useState(0);
@@ -24,9 +23,6 @@ export default function Home() {
 
   const handleQuizClick = () => {
     playButtonClickSound();
-    // Shuffle questions and take 10 random ones
-    const shuffled = [...quizQuestions].sort(() => Math.random() - 0.5);
-    startQuiz(shuffled.slice(0, 10));
     openQuiz();
   };
 

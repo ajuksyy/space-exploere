@@ -1,5 +1,11 @@
 import { create } from "zustand";
-import { QuizQuestion } from "@/data/quizQuestions";
+import { QuizQuestion, Difficulty } from "@/data/quizQuestions";
+
+interface WrongAnswer {
+  question: QuizQuestion;
+  selectedAnswer: number;
+  correctAnswer: number;
+}
 
 interface QuizState {
   isOpen: boolean;
@@ -8,8 +14,11 @@ interface QuizState {
   selectedAnswers: number[];
   questions: QuizQuestion[];
   isFinished: boolean;
+  selectedDifficulty: Difficulty | null;
+  wrongAnswers: WrongAnswer[];
   openQuiz: () => void;
   closeQuiz: () => void;
+  selectDifficulty: (difficulty: Difficulty) => void;
   startQuiz: (questions: QuizQuestion[]) => void;
   selectAnswer: (answerIndex: number) => void;
   nextQuestion: () => void;
@@ -23,8 +32,11 @@ export const useQuizStore = create<QuizState>((set) => ({
   selectedAnswers: [],
   questions: [],
   isFinished: false,
+  selectedDifficulty: null,
+  wrongAnswers: [],
   openQuiz: () => set({ isOpen: true }),
-  closeQuiz: () => set({ isOpen: false }),
+  closeQuiz: () => set({ isOpen: false, selectedDifficulty: null }),
+  selectDifficulty: (difficulty) => set({ selectedDifficulty: difficulty }),
   startQuiz: (questions) =>
     set({
       questions,
@@ -32,6 +44,7 @@ export const useQuizStore = create<QuizState>((set) => ({
       score: 0,
       selectedAnswers: [],
       isFinished: false,
+      wrongAnswers: [],
     }),
   selectAnswer: (answerIndex) =>
     set((state) => {
@@ -39,9 +52,20 @@ export const useQuizStore = create<QuizState>((set) => ({
       newSelectedAnswers[state.currentQuestionIndex] = answerIndex;
       const currentQuestion = state.questions[state.currentQuestionIndex];
       const isCorrect = answerIndex === currentQuestion.correctAnswer;
+      
+      let newWrongAnswers = [...state.wrongAnswers];
+      if (!isCorrect) {
+        newWrongAnswers.push({
+          question: currentQuestion,
+          selectedAnswer: answerIndex,
+          correctAnswer: currentQuestion.correctAnswer,
+        });
+      }
+      
       return {
         selectedAnswers: newSelectedAnswers,
         score: isCorrect ? state.score + 1 : state.score,
+        wrongAnswers: newWrongAnswers,
       };
     }),
   nextQuestion: () =>
@@ -58,6 +82,8 @@ export const useQuizStore = create<QuizState>((set) => ({
       score: 0,
       selectedAnswers: [],
       isFinished: false,
+      selectedDifficulty: null,
+      wrongAnswers: [],
     }),
 }));
 
