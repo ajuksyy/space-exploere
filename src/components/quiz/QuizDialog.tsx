@@ -59,15 +59,7 @@ export default function QuizDialog() {
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto bg-gradient-to-br from-gray-900 via-black to-gray-900 border-white/20 text-white backdrop-blur-xl">
         <DialogHeader>
-          <div className="flex items-center justify-between mb-4">
-            <div>
-              <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
-                Solar System Quiz
-              </DialogTitle>
-              <DialogDescription className="text-gray-300 mt-1">
-                Test your knowledge about our solar system! 🌌
-              </DialogDescription>
-            </div>
+          <div className="flex items-start gap-4 mb-4">
             <Button
               variant="ghost"
               size="icon"
@@ -76,6 +68,14 @@ export default function QuizDialog() {
             >
               <ArrowLeft className="h-5 w-5" />
             </Button>
+            <div className="flex-1">
+              <DialogTitle className="text-3xl font-bold bg-gradient-to-r from-yellow-400 to-yellow-600 bg-clip-text text-transparent">
+                Solar System Quiz
+              </DialogTitle>
+              <DialogDescription className="text-gray-300 mt-1">
+                Test your knowledge about our solar system! 🌌
+              </DialogDescription>
+            </div>
           </div>
         </DialogHeader>
 
